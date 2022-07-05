@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>trie</title>
+</head>
+
+<body>
+    <script>
+
+
+let ALPH_SIZE = 26;
+
+
+class TrieNode
+{
+	constructor()
+	{
+		this.isEndOfWord = false;
+		this.children = new Array(ALPH_SIZE);
+		for (let i = 0; i < ALPH_SIZE; i++)
+			this.children[i] = null;
+	}
+}
+
+let root;
+
+
+function insert(key)
+{
+	let level;
+		let length = key.length;
+		let index;
+		
+		let pCrawl = root;
+		
+		for (level = 0; level < length; level++)
+		{
+			index = key[level].charCodeAt(0) - 'a'.charCodeAt(0);
+			if (pCrawl.children[index] == null)
+				pCrawl.children[index] = new TrieNode();
+		
+			pCrawl = pCrawl.children[index];
+		}
+		
+		
+		pCrawl.isEndOfWord = true;
+}
+
+
+function search(key)
+{
+	let level;
+		let length = key.length;
+		let index;
+		let pCrawl = root;
+		
+		for (level = 0; level < length; level++)
+		{
+			index = key[level].charCodeAt(0) - 'a'.charCodeAt(0);
+		
+			if (pCrawl.children[index] == null)
+				return false;
+		
+			pCrawl = pCrawl.children[index];
+		}
+		
+		return (pCrawl.isEndOfWord);
+}
+
+
+let keys = ["the", "a", "there", "why", "any",
+				"by", "be", "their"];
+
+let output = ["  not present ", "Present "];
+
+
+root = new TrieNode();
+
+let i;
+for (i = 0; i < keys.length ; i++)
+	insert(keys[i]);
+
+
+if(search("the") == true)
+	document.write("the --- " + output[1]+"<br>");
+else
+	document.write("the --- " + output[0]+"<br>");
+
+if(search("why") == true)
+	document.write("why --- " + output[1]+"<br>");
+else
+	document.write("why --- " + output[0]+"<br>");
+
+if(search("be") == true)
+	document.write("be --- " + output[1]+"<br>");
+else
+	document.write("bes --- " + output[0]+"<br>");
+
+if(search("any") == true)
+	document.write("any --- " + output[1]+"<br>");
+else
+	document.write("any--- " + output[0]+"<br>");
+
+
+
+</script>
+</html>
